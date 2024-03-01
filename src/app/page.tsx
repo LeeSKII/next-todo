@@ -1,14 +1,19 @@
 import { revalidatePath } from "next/cache";
 import TodoList from "@/components/TodoList";
+import { saveToDo } from "@/lib/todo";
 
-const todoArr: string[] = [];
+import { todoArr } from "@/data/todo";
+
+// const todoArr: TodoItem[] = [];
 
 export default function Page() {
   async function addTodo(formData: FormData) {
     "use server";
     const todo = formData.get("todo");
-    console.log(todoArr.length);
-    if (typeof todo === "string") todoArr.push(todo);
+    if (todo && typeof todo === "string") {
+      const todoItem = saveToDo(todo);
+      todoArr.push(todoItem);
+    }
     revalidatePath("/");
   }
 
