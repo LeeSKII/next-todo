@@ -1,13 +1,20 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { XSquare, Pencil, Save } from "lucide-react";
+
 import { saveEditTodo } from "@/actions/todo";
+
 import { TodoItem } from "@/types/todo";
 
 export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
   const [todo, setTodo] = useState(todoItem);
   const [isEditing, setIsEditing] = useState(false);
   const [editTodo, setEditTodo] = useState(todoItem);
+  const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
   const editInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const saveEditTodoWithId = saveEditTodo.bind(null, todoItem.id);
 
@@ -17,19 +24,34 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
     }
   }, [isEditing]);
   return (
-    <div className="flex items-center space-x-2 justify-between">
+    <div
+      className={`flex items-center space-x-2 justify-between border-b-2  p-2 rounded-md shadow-sm ${
+        isCompleted && "bg-slate-100"
+      }`}
+    >
       {!isEditing ? (
-        <div className="mr-1 bg-slate-300 flex-grow">{todo.todo}</div>
+        <div className={`mr-1 flex-grow ${isCompleted ? "line-through" : ""}`}>
+          {todo.todo}
+        </div>
       ) : (
         <form
           action={saveEditTodoWithId}
-          onSubmit={() => {
+          onSubmit={async () => {
             setIsEditing(!isEditing);
-            // setTodo(editTodo);
+            if (
+              editTodo.todo === todo.todo &&
+              editTodo.isCompleted === todo.isCompleted
+            ) {
+              return;
+            }
+            const data = await axios.patch(`/todo`, editTodo);
+            if (data.status === 200) {
+              setTodo(editTodo);
+            }
           }}
           className="w-full"
         >
-          <div className="space-x-4 flex">
+          <div className="space-x-4 flex items-center">
             <input
               className="flex-grow"
               type="text"
@@ -41,38 +63,57 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
               }
             />
             {/* button的onClick事件会导致表单无法触发action，因此将onclick触发的动作放置到表单的onSubmit方法上 */}
-            <button type="submit" className="border shadow-sm px-2 rounded-lg">
-              Save
+            <button type="submit">
+              <Save className="w-5 h-5" />
             </button>
           </div>
         </form>
       )}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-3">
         {!isEditing && (
           <>
-            <div>
-              <input className="cursor-pointer" type="checkbox" />
-              <label className="cursor-pointer">Finish</label>
+            <div className="flex items-center">
+              <input
+                className="w-4 h-4"
+                checked={isCompleted}
+                onChange={async () => {
+                  setIsCompleted(!isCompleted);
+                  const data = await axios.patch(`/todo`, {
+                    ...editTodo,
+                    isCompleted: !isCompleted,
+                  });
+                  if (data.status === 200) {
+                    setEditTodo({
+                      ...editTodo,
+                      isCompleted: !editTodo.isCompleted,
+                    });
+                  } else {
+                    setIsCompleted(isCompleted);
+                  }
+                }}
+                type="checkbox"
+              />
             </div>
-            <button
+            <Pencil
+              className="w-5 h-5"
               onClick={() => {
                 setIsEditing(!isEditing);
               }}
-              className="border shadow-sm px-2 rounded-lg"
-            >
-              {isEditing ? "Save" : "Edit"}
-            </button>
+            ></Pencil>
           </>
         )}
 
-        <button
-          className="border shadow-sm px-2 rounded-lg"
-          onClick={() => {
-            console.log(`delete ${todo.id}`);
+        <XSquare
+          className="w-5 h-5"
+          onClick={async () => {
+            const data = await axios.delete(`/todo`, {
+              params: { id: todo.id },
+            });
+            if (data.status === 200) {
+              router.refresh();
+            }
           }}
-        >
-          Delete
-        </button>
+        ></XSquare>
       </div>
     </div>
   );
