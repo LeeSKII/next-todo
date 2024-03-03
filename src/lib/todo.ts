@@ -2,7 +2,6 @@ import { revalidatePath } from "next/cache";
 import { TodoItem } from "@/types/todo";
 
 import TodoModel from "@/db/mongodb/models/todo";
-import { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES } from "react";
 
 export async function saveToDo(todo: string): Promise<TodoItem> {
   const newTodo = new TodoModel({
