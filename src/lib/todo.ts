@@ -8,6 +8,7 @@ export async function saveToDo(todo: string): Promise<TodoItem> {
     todo,
     isCompleted: false,
     createdAt: new Date().toISOString(),
+    updatedAt: "",
   });
   const savedTodo = await newTodo.save();
   const todoItem = {
@@ -43,7 +44,7 @@ export async function updateToDo(
     const todoUpdated = await TodoModel.findByIdAndUpdate(id, {
       isCompleted,
       todo,
-      updateAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     });
     if (todoUpdated) {
       return {
