@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { XSquare, Pencil, Save } from "lucide-react";
 
-import { saveEditTodo } from "@/actions/todo";
-
 import { TodoItem } from "@/types/todo";
 
 export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
@@ -15,8 +13,6 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
   const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
   const editInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
-  const saveEditTodoWithId = saveEditTodo.bind(null, todoItem.id);
 
   useEffect(() => {
     if (isEditing) {
@@ -35,18 +31,20 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
         </div>
       ) : (
         <form
-          action={saveEditTodoWithId}
-          onSubmit={async () => {
+          onSubmit={async (e) => {
+            e.preventDefault();
             setIsEditing(!isEditing);
             if (
               editTodo.todo === todo.todo &&
               editTodo.isCompleted === todo.isCompleted
             ) {
               return;
+            } else {
+              setTodo({ ...editTodo });
             }
             const data = await axios.patch(`/todo`, editTodo);
-            if (data.status === 200) {
-              setTodo(editTodo);
+            if (data.status !== 200) {
+              setTodo({ ...todo });
             }
           }}
           className="w-full"
@@ -64,7 +62,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
             />
             {/* button的onClick事件会导致表单无法触发action，因此将onclick触发的动作放置到表单的onSubmit方法上 */}
             <button type="submit">
-              <Save className="w-5 h-5" />
+              <Save className="w-5 h-5 cursor-pointer" />
             </button>
           </div>
         </form>
@@ -74,7 +72,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
           <>
             <div className="flex items-center">
               <input
-                className="w-4 h-4"
+                className="w-4 h-4 cursor-pointer"
                 checked={isCompleted}
                 onChange={async () => {
                   setIsCompleted(!isCompleted);
@@ -95,7 +93,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
               />
             </div>
             <Pencil
-              className="w-5 h-5"
+              className="w-5 h-5 cursor-pointer"
               onClick={() => {
                 setIsEditing(!isEditing);
               }}
@@ -104,7 +102,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
         )}
 
         <XSquare
-          className="w-5 h-5"
+          className="w-5 h-5 cursor-pointer"
           onClick={async () => {
             const data = await axios.delete(`/todo`, {
               params: { id: todo.id },
