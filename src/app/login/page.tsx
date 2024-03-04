@@ -21,9 +21,9 @@ export default function Page() {
   }
 
   return (
-    <div className="container relative mx-auto h-screen">
+    <div className="container relative mx-auto flex items-center justify-center h-screen">
       <form
-        className="w-full flex flex-col items-center justify-center gap-2 fixed top-1/3"
+        className="flex flex-col items-center justify-center gap-2 fixed top-1/3 w-full"
         action={login}
       >
         <div className="space-x-2">
