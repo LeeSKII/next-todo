@@ -5,7 +5,9 @@ import TodoList from "@/components/TodoList";
 import { saveToDo, getAllToDos } from "@/lib/todo";
 import connect from "@/db/mongodb/connect";
 
-// export const dynamic = "force-dynamic";
+import { SubmitButton } from "@/components/SubmitButton";
+
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
   await connect();
@@ -34,12 +36,7 @@ export default async function Page() {
             className="p-2 border rounded-xl shadow-lg"
             type="text"
           />
-          <button
-            type="submit"
-            className="border shadow-sm p-2 px-4 bg-orange-600 text-white rounded-lg"
-          >
-            Add
-          </button>
+          <SubmitButton></SubmitButton>
         </form>
         <div className="w-full">
           <TodoList todoArr={todoArr}></TodoList>
