@@ -23,21 +23,27 @@ export default async function Page() {
   }
 
   return (
-    <div className="container mx-auto mt-4 p-2">
+    <div className="container mx-auto p-2 relative">
       <div className="p-1 space-y-2 md:w-1/2 max-h-30 mx-auto flex flex-col md:space-y-5 items-start border shadow-xl rounded-xl md:p-4">
-        <div className="w-full flex justify-end">
-          <div className="mr-4 my-2 border p-1 rounded-3xl bg-green-100">
-            <User className="w-6 h-6 stroke-blue-500"></User>
+        <div className="w-full sticky top-0 shadow-md p-6 rounded-md bg-slate-50">
+          <div className="w-full flex justify-end">
+            <div className="mr-4 border p-1 rounded-3xl bg-green-100">
+              <User className="w-6 h-6 stroke-blue-500"></User>
+            </div>
           </div>
+          <form
+            action={addTodo}
+            className="w-full mt-4 flex items-center justify-center space-x-2"
+          >
+            <input
+              name="todo"
+              className="p-2 border rounded-xl shadow-lg"
+              type="text"
+            />
+            <SubmitButton></SubmitButton>
+          </form>
         </div>
-        <form action={addTodo} className="self-center mt-4 flex space-x-2">
-          <input
-            name="todo"
-            className="p-2 border rounded-xl shadow-lg"
-            type="text"
-          />
-          <SubmitButton></SubmitButton>
-        </form>
+
         <div className="w-full">
           <TodoList todoArr={todoArr}></TodoList>
         </div>

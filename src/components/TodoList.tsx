@@ -18,5 +18,5 @@ export default function TodoList({ todoArr }: { todoArr: TodoItem[] }) {
   const todoItems = todoArr.map((todo) => (
     <TodoItemComponent key={todo.id} todoItem={todo} />
   ));
-  return <div className="mx-4 space-y-2">{todoArr && todoItems}</div>;
+  return <div className="mx-4 mt-3 space-y-2">{todoArr && todoItems}</div>;
 }

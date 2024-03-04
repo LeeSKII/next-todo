@@ -8,10 +8,12 @@ export function SubmitButton() {
   return (
     <button
       type="submit"
-      aria-disabled={pending}
-      className="border shadow-sm p-2 px-4 bg-orange-600 text-white rounded-lg"
+      disabled={pending}
+      className={`border shadow-sm p-2 px-4  text-white rounded-lg ${
+        pending ? "bg-orange-100" : "bg-orange-600"
+      }`}
     >
-      Add
+      {pending ? "Saving" : "Add"}
     </button>
   );
 }
