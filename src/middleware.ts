@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
   if (!userCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
   return NextResponse.next();
 }
 
@@ -20,6 +21,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!login|_next/static|_next/image|favicon.ico).*)",
+    "/((?!login|register|_next/static|_next/image|favicon.ico).*)",
   ],
 };

@@ -1,12 +1,21 @@
-import { revalidatePath } from "next/cache";
+import UserModel from "@/db/mongodb/models/user";
 import { TodoItem } from "@/types/todo";
 
 import TodoModel from "@/db/mongodb/models/todo";
+import type { User } from "@/types/user";
+import connect from "@/db/mongodb/connect";
 
-export async function saveToDo(todo: string): Promise<TodoItem> {
+export async function saveToDo({
+  todo,
+  belong,
+}: {
+  todo: string;
+  belong: string;
+}): Promise<TodoItem> {
   const newTodo = new TodoModel({
     todo,
     isCompleted: false,
+    belong,
     createdAt: new Date().toISOString(),
     updatedAt: "",
   });
@@ -20,8 +29,12 @@ export async function saveToDo(todo: string): Promise<TodoItem> {
   return todoItem;
 }
 
-export async function getAllToDos(): Promise<TodoItem[]> {
-  const todoData = await TodoModel.find({});
+export async function getAllToDos({
+  belong,
+}: {
+  belong: string;
+}): Promise<TodoItem[]> {
+  const todoData = await TodoModel.find({ belong });
   const todoArr: TodoItem[] = [];
   todoData.map((todo) => {
     todoArr.push({
@@ -68,5 +81,52 @@ export async function deleteToDo(id: string): Promise<string> {
     return todo._id.toString();
   } else {
     throw new Error("Error deleting todo");
+  }
+}
+
+export async function registerUser({
+  account,
+  password,
+}: {
+  account: string;
+  password: string;
+}): Promise<User> {
+  try {
+    await connect();
+    const userData = await UserModel.create({
+      name: account,
+      password,
+      createdAt: new Date().toISOString(),
+    });
+
+    return {
+      id: userData._id.toString(),
+      name: userData.name,
+    };
+  } catch (error) {
+    throw new Error("Error registering user");
+  }
+}
+
+export async function verifyUser({
+  account,
+  password,
+}: {
+  account: string;
+  password: string;
+}): Promise<User | null> {
+  await connect();
+  try {
+    const user = await UserModel.findOne({ name: account });
+    if (user && user.password === password) {
+      return {
+        id: user._id.toString(),
+        name: user.name,
+      };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    throw new Error("Error verifying user");
   }
 }
