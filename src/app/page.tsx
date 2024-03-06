@@ -72,11 +72,11 @@ export default async function Page() {
           </div>
           <form
             action={addTodo}
-            className="w-full mt-4 flex items-center justify-center space-x-2"
+            className="w-full px-4 mt-4 flex items-center justify-center space-x-2"
           >
             <input
               name="todo"
-              className="p-2 border rounded-xl shadow-lg"
+              className="flex-grow p-2 border rounded-xl shadow-lg"
               type="text"
             />
             <SubmitButton text="Add" loadingText="Add..."></SubmitButton>

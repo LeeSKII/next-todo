@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import UserModel from "@/db/mongodb/models/user";
 import { TodoItem } from "@/types/todo";
 
@@ -16,7 +18,7 @@ export async function saveToDo({
     todo,
     isCompleted: false,
     belong,
-    createdAt: new Date().toISOString(),
+    createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     updatedAt: "",
   });
   const savedTodo = await newTodo.save();
@@ -34,7 +36,7 @@ export async function getAllToDos({
 }: {
   belong: string;
 }): Promise<TodoItem[]> {
-  const todoData = await TodoModel.find({ belong });
+  const todoData = await TodoModel.find({ belong }).sort({ createdAt: -1 });
   const todoArr: TodoItem[] = [];
   todoData.map((todo) => {
     todoArr.push({
@@ -57,7 +59,7 @@ export async function updateToDo(
     const todoUpdated = await TodoModel.findByIdAndUpdate(id, {
       isCompleted,
       todo,
-      updatedAt: new Date().toISOString(),
+      updatedAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     });
     if (todoUpdated) {
       return {
@@ -96,7 +98,7 @@ export async function registerUser({
     const userData = await UserModel.create({
       name: account,
       password,
-      createdAt: new Date().toISOString(),
+      createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     });
 
     return {
