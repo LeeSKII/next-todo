@@ -6,6 +6,7 @@ import { User, SquareUserRound, LogOut } from "lucide-react";
 import TodoList from "@/components/TodoList";
 import { saveToDo, getAllToDos } from "@/lib/todo";
 import connect from "@/db/mongodb/connect";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 import { SubmitButton } from "@/components/SubmitButton";
 import { redirect } from "next/navigation";
@@ -46,6 +47,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto p-2 relative">
+      <ThemeSwitcher></ThemeSwitcher>
       <div className="p-1 space-y-2 md:w-1/2 max-h-30 mx-auto flex flex-col md:space-y-5 items-start border shadow-xl rounded-xl md:p-4">
         <div className="w-full sticky top-0 shadow-md p-6 rounded-md bg-slate-50">
           <div className="w-full flex justify-end items-center">

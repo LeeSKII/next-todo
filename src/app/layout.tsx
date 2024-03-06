@@ -13,7 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // 增加suppressHydrationWarning消除next-theme警告
+    <html suppressHydrationWarning>
       <body>
         <Providers>{children}</Providers>
       </body>
