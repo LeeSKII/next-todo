@@ -3,23 +3,48 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Button } from "@nextui-org/react";
+import { Switch, Skeleton } from "@nextui-org/react";
+import { MoonIcon } from "./MoonIcon";
+import { SunIcon } from "./SunIcon";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [isSelected, setIsSelected] = useState(theme === "light");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    // avoid cls
+    return (
+      <Skeleton className="w-full rounded-lg">
+        <div className="w-full px-3 h-6 rounded-lg bg-default-300"></div>
+      </Skeleton>
+    );
+  }
 
   return (
     <div>
-      The current theme is: {theme}
-      <Button onClick={() => setTheme("light")}>Light Mode</Button>
-      <Button onClick={() => setTheme("dark")}>Dark Mode</Button>
+      <Switch
+        isSelected={isSelected}
+        onValueChange={() => {
+          setIsSelected(!isSelected);
+          setTheme(isSelected ? "dark" : "light");
+        }}
+        size={"sm"}
+        color="secondary"
+        thumbIcon={({ isSelected, className }) =>
+          isSelected ? (
+            <SunIcon className={className} />
+          ) : (
+            <MoonIcon className={className} />
+          )
+        }
+      >
+        {theme}
+      </Switch>
     </div>
   );
 }

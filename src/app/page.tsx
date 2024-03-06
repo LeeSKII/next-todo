@@ -47,9 +47,11 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto p-2 relative">
-      <ThemeSwitcher></ThemeSwitcher>
       <div className="p-1 space-y-2 md:w-1/2 max-h-30 mx-auto flex flex-col md:space-y-5 items-start border shadow-xl rounded-xl md:p-4">
-        <div className="w-full sticky top-0 shadow-md p-6 rounded-md bg-slate-50">
+        <div className="w-full flex items-center justify-end pr-12">
+          <ThemeSwitcher></ThemeSwitcher>
+        </div>
+        <div className="w-full sticky top-0 shadow-md p-6 rounded-md">
           <div className="w-full flex justify-end items-center">
             {isLogin ? (
               <div className="w-full px-10 flex items-center justify-between  p-1 text-orange-600 font-medium">
@@ -60,7 +62,7 @@ export default async function Page() {
 
                 <form action={logout}>
                   <button type="submit">
-                    <LogOut className="w-6 h-6 stroke-zinc-900"></LogOut>
+                    <LogOut className="w-6 h-6"></LogOut>
                   </button>
                 </form>
               </div>
