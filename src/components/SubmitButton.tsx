@@ -2,7 +2,13 @@
 
 import { useFormStatus } from "react-dom";
 
-export function SubmitButton() {
+export function SubmitButton({
+  text,
+  loadingText,
+}: {
+  text: string;
+  loadingText: string;
+}) {
   const { pending } = useFormStatus();
 
   return (
@@ -13,7 +19,7 @@ export function SubmitButton() {
         pending ? "bg-orange-100" : "bg-orange-600"
       }`}
     >
-      {pending ? "Saving" : "Add"}
+      {pending ? loadingText : text}
     </button>
   );
 }

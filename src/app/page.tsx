@@ -9,7 +9,7 @@ import connect from "@/db/mongodb/connect";
 
 import { SubmitButton } from "@/components/SubmitButton";
 import { redirect } from "next/navigation";
-import { TodoItem } from "@/types/todo";
+import type { TodoItem } from "@/types/todo";
 
 export const dynamic = "force-dynamic";
 
@@ -79,7 +79,7 @@ export default async function Page() {
               className="p-2 border rounded-xl shadow-lg"
               type="text"
             />
-            <SubmitButton></SubmitButton>
+            <SubmitButton text="Add" loadingText="Add..."></SubmitButton>
           </form>
         </div>
 

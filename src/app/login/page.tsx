@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { verifyUser } from "@/lib/todo";
 
+import { SubmitButton } from "@/components/SubmitButton";
+
 export default function Page() {
   async function login(formData: FormData) {
     "use server";
@@ -54,12 +56,7 @@ export default function Page() {
           />
         </div>
         <div className="mt-3 flex gap-2 items-center justify-center">
-          <button
-            className="bg-green-100 px-6 py-2 border rounded-3xl"
-            type="submit"
-          >
-            Login
-          </button>
+          <SubmitButton text="Login" loadingText="Login..."></SubmitButton>
           <Link
             href={"/register"}
             className="bg-blue-200 px-4 py-2 border rounded-3xl"

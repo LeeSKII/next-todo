@@ -64,6 +64,13 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
             <button type="submit">
               <Save className="w-5 h-5 cursor-pointer" />
             </button>
+            <XSquare
+              className="w-5 h-5 cursor-pointer"
+              onClick={() => {
+                setIsEditing(false);
+                setEditTodo({ ...todo });
+              }}
+            ></XSquare>
           </div>
         </form>
       )}
@@ -98,20 +105,19 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
                 setIsEditing(!isEditing);
               }}
             ></Pencil>
+            <XSquare
+              className="w-5 h-5 cursor-pointer"
+              onClick={async () => {
+                const data = await axios.delete(`/todo`, {
+                  params: { id: todo.id },
+                });
+                if (data.status === 200) {
+                  router.refresh();
+                }
+              }}
+            ></XSquare>
           </>
         )}
-
-        <XSquare
-          className="w-5 h-5 cursor-pointer"
-          onClick={async () => {
-            const data = await axios.delete(`/todo`, {
-              params: { id: todo.id },
-            });
-            if (data.status === 200) {
-              router.refresh();
-            }
-          }}
-        ></XSquare>
       </div>
     </div>
   );
