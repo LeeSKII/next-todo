@@ -20,9 +20,17 @@ export function ThemeSwitcher() {
   if (!mounted) {
     // avoid cls
     return (
-      <Skeleton className="w-12 px-3 rounded-full">
-        <div className="w-full px-3 h-6 rounded-lg"></div>
-      </Skeleton>
+      // <Skeleton className="w-12 px-3 rounded-full">
+      //   <div className="w-full px-3 h-6 rounded-lg"></div>
+      // </Skeleton>
+      <div>
+        <Switch
+          isSelected={true}
+          size={"sm"}
+          color="secondary"
+          thumbIcon={<SunIcon />}
+        ></Switch>
+      </div>
     );
   }
 
