@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 import { addTodo } from "@/actions/todo";
+import { revalidatePath } from "next/cache";
 
 export default function TodoForm({ user }: { user: string }) {
   const [todo, setTodo] = useState("");
