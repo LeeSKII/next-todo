@@ -9,8 +9,8 @@ import { SunIcon } from "./SunIcon";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme, systemTheme } = useTheme();
-  const [isSelected, setIsSelected] = useState(systemTheme === "light");
+  const { theme, setTheme } = useTheme();
+  const [isSelected, setIsSelected] = useState(theme === "light");
 
   useEffect(() => {
     setMounted(true);
@@ -43,9 +43,7 @@ export function ThemeSwitcher() {
             <MoonIcon className={className} />
           )
         }
-      >
-        {systemTheme}
-      </Switch>
+      ></Switch>
     </div>
   );
 }
