@@ -30,9 +30,9 @@ export function ThemeSwitcher() {
     <div>
       <Switch
         isSelected={isSelected}
-        onValueChange={() => {
+        onValueChange={(val) => {
           setIsSelected(!isSelected);
-          setTheme(isSelected ? "dark" : "light");
+          setTheme(val ? "light" : "dark");
         }}
         size={"sm"}
         color="secondary"
