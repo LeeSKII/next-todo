@@ -21,9 +21,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
   }, [isEditing]);
   return (
     <div
-      className={`flex items-center space-x-2 justify-between border-b-2  p-2 rounded-md shadow-sm ${
-        isCompleted && "bg-slate-100"
-      }`}
+      className={`flex items-center space-x-2 justify-between border-b-2  p-2 rounded-md shadow-sm`}
     >
       {!isEditing ? (
         <div className={`mr-1 flex-grow ${isCompleted ? "line-through" : ""}`}>
