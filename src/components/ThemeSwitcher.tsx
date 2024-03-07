@@ -9,13 +9,14 @@ import { SunIcon } from "./SunIcon";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [isSelected, setIsSelected] = useState(theme === "light");
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [isSelected, setIsSelected] = useState(systemTheme === "light");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  //页面服务端渲染的时候不知道当前的theme，所以必须等mounted之后才能确认
   if (!mounted) {
     // avoid cls
     return (
@@ -43,7 +44,7 @@ export function ThemeSwitcher() {
           )
         }
       >
-        {theme}
+        {systemTheme}
       </Switch>
     </div>
   );
