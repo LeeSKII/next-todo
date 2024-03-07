@@ -20,8 +20,8 @@ export function ThemeSwitcher() {
   if (!mounted) {
     // avoid cls
     return (
-      <Skeleton className="w-full rounded-lg">
-        <div className="w-full px-3 h-6 rounded-lg bg-default-300"></div>
+      <Skeleton className="w-12 px-3 rounded-full">
+        <div className="w-full px-3 h-6 rounded-lg"></div>
       </Skeleton>
     );
   }
