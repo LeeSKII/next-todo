@@ -33,25 +33,39 @@ export default function TodoForm({ user }: { user: string }) {
     inputRef.current?.focus();
   }, []);
 
-  const addTodoWithUser = addTodo.bind(null, user);
+  // const addTodoWithUser = addTodo.bind(null, user);
   // useFormState在表单提交后传出action的返回状态
-  const [todoItem, formAction] = useFormState(addTodoWithUser, null);
-  useEffect(() => {
-    if (todoItem) {
-      toast({
-        title: "New ToDo is arriving!",
-        description: `${todoItem?.todo} added in todo list.`,
-        duration: 2000,
-      });
-    }
-    setTodo("");
-    inputRef.current?.focus(); // 提交后自动聚焦输入框
-  }, [todoItem]);
+  // const [todoItem, formAction] = useFormState(addTodoWithUser, null);
+  // useEffect(() => {
+  //   if (todoItem) {
+  //     toast({
+  //       title: "New ToDo is arriving!",
+  //       description: `${todoItem?.todo} added in todo list.`,
+  //       duration: 2000,
+  //     });
+  //   }
+  //   setTodo("");
+  //   inputRef.current?.focus(); // 提交后自动聚焦输入框
+  // }, [todoItem]);
+  {
+    /* code above replace another write way use inner action*/
+  }
 
   return (
     <form
       className="flex items-center justify-between gap-3 px-3"
-      action={formAction}
+      action={async (formData: FormData) => {
+        const todoItem = await addTodo(user, null, formData);
+        if (todoItem) {
+          toast({
+            title: "New ToDo is arriving!",
+            description: `${todoItem?.todo} added in todo list.`,
+            duration: 2000,
+          });
+          setTodo("");
+          inputRef.current?.focus(); // 提交后自动聚焦输入框
+        }
+      }}
     >
       <Input
         size="sm"

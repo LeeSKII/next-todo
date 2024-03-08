@@ -18,26 +18,30 @@ export async function addTodo(
   belong: string,
   prevState: TodoItem | null,
   formData: FormData
-): Promise<TodoItem> {
-  const todo = formData.get("todo")?.toString();
-  const newTodo = new TodoModel({
-    todo,
-    isCompleted: false,
-    belong,
-    createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
-    updatedAt: "",
-  });
-  await connect();
-  const savedTodo = await newTodo.save();
-  // 刷新服务端的数据缓存，form提交后会刷新页面
-  revalidatePath("/nextui", "page");
-  const todoItem = {
-    id: savedTodo._id.toString(),
-    todo: savedTodo.todo,
-    isCompleted: savedTodo.isCompleted,
-    createdAt: savedTodo.createdAt,
-  };
-  return todoItem;
+): Promise<TodoItem | null> {
+  try {
+    const todo = formData.get("todo")?.toString();
+    const newTodo = new TodoModel({
+      todo,
+      isCompleted: false,
+      belong,
+      createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+      updatedAt: "",
+    });
+    await connect();
+    const savedTodo = await newTodo.save();
+    // 刷新服务端的数据缓存，form提交后会刷新页面
+    revalidatePath("/nextui", "page");
+    const todoItem = {
+      id: savedTodo._id.toString(),
+      todo: savedTodo.todo,
+      isCompleted: savedTodo.isCompleted,
+      createdAt: savedTodo.createdAt,
+    };
+    return todoItem;
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function deleteTodoById(todoId: string) {
