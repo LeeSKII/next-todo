@@ -90,6 +90,7 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
               defaultValue={editTodo.todo}
               name="todo"
               isRequired
+              maxLength={50}
               ref={editInputRef}
               onChange={(e) =>
                 setEditTodo({ ...editTodo, todo: e.target.value })
@@ -111,15 +112,20 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
           </div>
         </form>
       )}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center gap-1">
         {!isEditing && (
           <>
             <div className="flex items-center">
               <Checkbox
+                radius="full"
+                size="lg"
                 isSelected={isCompleted}
-                onChange={async () => {
+                onChange={async (e) => {
                   setIsCompleted(!isCompleted);
-                  const data = await updateTodo(editTodo);
+                  const data = await updateTodo({
+                    ...editTodo,
+                    isCompleted: e.target.checked,
+                  });
                   if (typeof data === "string") {
                     setIsCompleted(isCompleted);
                     toast({
@@ -133,8 +139,12 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
                       isCompleted: !editTodo.isCompleted,
                     });
                     toast({
-                      title: "Bonus You have done great!!!",
-                      description: `${todo.todo} is done!.`,
+                      title: e.target.checked
+                        ? "Bonus You have done great!!!"
+                        : "Oops task restarted!!!",
+                      description: e.target.checked
+                        ? `${todo.todo} is done!.`
+                        : `${todo.todo} is opened now!.`,
                       duration: 2000,
                     });
                   }

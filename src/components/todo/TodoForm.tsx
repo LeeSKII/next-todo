@@ -39,7 +39,7 @@ export default function TodoForm({ user }: { user: string }) {
   useEffect(() => {
     if (todoItem) {
       toast({
-        // title: todoItem?.todo,
+        title: "New ToDo is arriving!",
         description: `${todoItem?.todo} added in todo list.`,
         duration: 2000,
       });
@@ -60,6 +60,7 @@ export default function TodoForm({ user }: { user: string }) {
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
         isRequired
+        maxLength={50}
         label="Wait to do"
       />
       <SubmitButton></SubmitButton>
