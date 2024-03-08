@@ -42,9 +42,7 @@ export default async function Page() {
             </form>
           </Tooltip>
         </div>
-        <div>
-          <TodoForm user="joe"></TodoForm>
-        </div>
+        <div>{user && <TodoForm user={user}></TodoForm>}</div>
         <div className="w-full">
           <TodoList todoArr={todoArr}></TodoList>
         </div>

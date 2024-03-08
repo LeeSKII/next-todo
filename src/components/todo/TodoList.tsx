@@ -17,7 +17,6 @@ export default function TodoList({ todoArr }: { todoArr: TodoItem[] }) {
 
   // function handleDeleteTodo(id: string) {
   //   console.log(id);
-  //   // 删除todo
   //   todoList.splice(
   //     todoList.findIndex((todo) => todo.id === id),
   //     1
