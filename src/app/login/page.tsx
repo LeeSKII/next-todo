@@ -29,7 +29,7 @@ export default function Page() {
           redirect(`/login?error=${error.message}`);
         }
       }
-      redirect("/");
+      redirect("/nextui");
     }
   }
 

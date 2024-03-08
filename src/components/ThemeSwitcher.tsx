@@ -27,7 +27,7 @@ export function ThemeSwitcher() {
         <Switch
           isSelected={true}
           size={"sm"}
-          color="default"
+          color="primary"
           thumbIcon={<SunIcon />}
         ></Switch>
       </div>
