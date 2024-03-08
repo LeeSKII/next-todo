@@ -37,11 +37,13 @@ export default function TodoForm({ user }: { user: string }) {
   // useFormState在表单提交后传出action的返回状态
   const [todoItem, formAction] = useFormState(addTodoWithUser, null);
   useEffect(() => {
-    toast({
-      // title: todoItem?.todo,
-      description: `${todoItem?.todo} added in todo list.`,
-      duration: 2000,
-    });
+    if (todoItem) {
+      toast({
+        // title: todoItem?.todo,
+        description: `${todoItem?.todo} added in todo list.`,
+        duration: 2000,
+      });
+    }
     setTodo("");
     inputRef.current?.focus(); // 提交后自动聚焦输入框
   }, [todoItem]);
