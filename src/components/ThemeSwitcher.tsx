@@ -43,7 +43,7 @@ export function ThemeSwitcher() {
           setTheme(val ? "light" : "dark");
         }}
         size={"sm"}
-        color="default"
+        color="primary"
         thumbIcon={({ isSelected, className }) =>
           isSelected ? (
             <SunIcon className={className} />

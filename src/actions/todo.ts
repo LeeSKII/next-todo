@@ -1,20 +1,11 @@
 "use server";
 import type { TodoItem } from "@/types/todo";
-import { todoArr } from "@/data/todo";
 import { revalidatePath } from "next/cache";
 import TodoModel from "@/db/mongodb/models/todo";
 import connect from "@/db/mongodb/connect";
 import dayjs from "dayjs";
-
-export async function saveEditTodo(todoId: string, formData: FormData) {
-  const todoEdited = formData.get("todo");
-  const todo = todoArr.find((item) => {
-    return item.id === todoId;
-  });
-  if (todo) todo.todo = todoEdited as string;
-
-  revalidatePath("/");
-}
+import { deleteToDo, updateToDo } from "@/lib/todo";
+import todo from "@/db/mongodb/models/todo";
 
 /**
  * 增加待办事项
@@ -38,6 +29,8 @@ export async function addTodo(
   });
   await connect();
   const savedTodo = await newTodo.save();
+  // 刷新服务端的数据缓存，form提交后会刷新页面
+  revalidatePath("/nextui", "page");
   const todoItem = {
     id: savedTodo._id.toString(),
     todo: savedTodo.todo,
@@ -45,4 +38,39 @@ export async function addTodo(
     createdAt: savedTodo.createdAt,
   };
   return todoItem;
+}
+
+export async function deleteTodoById(todoId: string) {
+  if (todoId) {
+    try {
+      const resId = await deleteToDo(todoId);
+    } catch (error) {
+      return "failed";
+    }
+  }
+
+  return "success";
+}
+
+export async function updateTodo(
+  todoData: TodoItem
+): Promise<TodoItem | string> {
+  try {
+    const res = await updateToDo(
+      todoData.id,
+      todoData.todo,
+      todoData.isCompleted
+    );
+    if (res) {
+      return res;
+    } else {
+      return "update return is null.";
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      return error.message;
+    } else {
+      return "update failed with unknown exception.";
+    }
+  }
 }

@@ -1,12 +1,12 @@
-import { Button, Avatar, Input } from "@nextui-org/react";
+import { Tooltip, Button, Avatar } from "@nextui-org/react";
 import { LogOut } from "lucide-react";
 
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import TodoForm from "@/components/TodoForm";
+import TodoForm from "@/components/todo/TodoForm";
 import connect from "@/db/mongodb/connect";
 import type { TodoItem } from "@/types/todo";
 import { getAllToDos } from "@/lib/todo";
-import TodoList from "@/components/TodoList";
+import TodoList from "@/components/todo/TodoList";
 
 export default async function Page() {
   // wait db
@@ -22,8 +22,12 @@ export default async function Page() {
           <ThemeSwitcher />
         </div>
         <div className="flex justify-between my-6 px-9">
-          <Avatar isBordered size={"sm"} name="joe"></Avatar>
-          <LogOut size={"30"} className=""></LogOut>
+          <Avatar color="primary" isBordered size={"sm"} name="joe"></Avatar>
+          <Tooltip content="Log out">
+            <Button isIconOnly color="primary">
+              <LogOut size={"30"}></LogOut>
+            </Button>
+          </Tooltip>
         </div>
         <div>
           <TodoForm user="joe"></TodoForm>

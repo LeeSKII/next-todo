@@ -7,12 +7,26 @@ import { useFormState } from "react-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 import { addTodo } from "@/actions/todo";
-import { revalidatePath } from "next/cache";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      className="flex-grow"
+      type="submit"
+      color="primary"
+      size={"md"}
+      isLoading={pending}
+    >
+      Add
+    </Button>
+  );
+}
 
 export default function TodoForm({ user }: { user: string }) {
   const [todo, setTodo] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { pending } = useFormStatus();
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -46,15 +60,7 @@ export default function TodoForm({ user }: { user: string }) {
         isRequired
         label="Wait to do"
       />
-      <Button
-        className="flex-grow"
-        type="submit"
-        defaultValue={"primary"}
-        size={"md"}
-        isDisabled={pending}
-      >
-        {pending ? "Add..." : "Add"}
-      </Button>
+      <SubmitButton></SubmitButton>
     </form>
   );
 }
