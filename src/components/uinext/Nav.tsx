@@ -27,12 +27,17 @@ export default function Nav({ userInfo }: { userInfo: React.ReactNode }) {
 
   return (
     <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
-      <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
       <NavbarContent justify="start">
-        <NavbarBrand>
-          <Drama />
-          <p className="font-bold text-inherit">Drama</p>
-        </NavbarBrand>
+        <NavbarMenuToggle
+          className="sm:hidden"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+        <Link href={"/"}>
+          <NavbarBrand>
+            <Drama />
+            <p className="font-bold text-inherit">Drama</p>
+          </NavbarBrand>
+        </Link>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
