@@ -29,7 +29,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto p-3 mt-3">
-      <div className="border md:w-1/2 mx-auto shadow-md rounded-md p-3">
+      <div className="border md:w-1/2 mx-auto shadow-md rounded-md p-3 relative">
         <div className="flex justify-end pr-6">
           {/* dark model  */}
           <ThemeSwitcher />
@@ -42,7 +42,9 @@ export default async function Page() {
             </form>
           </Tooltip>
         </div>
-        <div>{user && <TodoForm user={user}></TodoForm>}</div>
+        <div className="sticky top-1 shadow-md p-3 rounded-lg z-10">
+          {user && <TodoForm user={user}></TodoForm>}
+        </div>
         <div className="w-full">
           <TodoList todoArr={todoArr}></TodoList>
         </div>
