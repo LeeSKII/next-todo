@@ -11,7 +11,9 @@ export default function Page() {
     <div className="container mx-auto mt-3 px-5 ">
       <div className="flex flex-col gap-3">
         {outline.map((item) => (
-          <LinkItem href={item.href}>{item.title}</LinkItem>
+          <LinkItem key={`${item.href}-${item.title}`} href={item.href}>
+            {item.title}
+          </LinkItem>
         ))}
       </div>
     </div>
