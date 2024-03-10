@@ -28,7 +28,6 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
   const [todo, setTodo] = useState(todoItem);
   const [isEditing, setIsEditing] = useState(false);
   const [editTodo, setEditTodo] = useState(todoItem);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
   const editInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -179,8 +178,6 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
                       duration: 2000,
                     });
                   }
-                } finally {
-                  setIsDeleting(false);
                 }
               }}
             >
