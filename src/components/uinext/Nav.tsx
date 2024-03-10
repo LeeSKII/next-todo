@@ -23,6 +23,7 @@ export default function Nav({ userInfo }: { userInfo: React.ReactNode }) {
     { title: "Raw Todo", href: "/" },
     { title: "Next Todo", href: "/nextui" },
     { title: "Tailwind SandBox", href: "/nextui/tailwind" },
+    { title: "User", href: "/nextui/user" },
   ];
 
   return (
@@ -54,6 +55,11 @@ export default function Nav({ userInfo }: { userInfo: React.ReactNode }) {
         <NavbarItemS href="/nextui/tailwind">
           <Link color="foreground" href="/nextui/tailwind">
             Tailwind Sandbox
+          </Link>
+        </NavbarItemS>
+        <NavbarItemS href="/nextui/user">
+          <Link color="foreground" href="/nextui/user">
+            User
           </Link>
         </NavbarItemS>
       </NavbarContent>
