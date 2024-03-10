@@ -48,6 +48,9 @@ export async function deleteTodoById(todoId: string) {
   if (todoId) {
     try {
       const resId = await deleteToDo(todoId);
+      if (resId) {
+        revalidatePath("/nextui", "page");
+      }
     } catch (error) {
       return "failed";
     }
@@ -66,6 +69,7 @@ export async function updateTodo(
       todoData.isCompleted
     );
     if (res) {
+      revalidatePath("/nextui", "page");
       return res;
     } else {
       return "update return is null.";

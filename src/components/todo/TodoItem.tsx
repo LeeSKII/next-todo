@@ -1,16 +1,15 @@
 "use client";
 import { useState, useRef, useEffect, useOptimistic } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 import { XSquare, Pencil, Save } from "lucide-react";
 import { Button, Checkbox, Input } from "@nextui-org/react";
+import React from "react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { TodoItem } from "@/types/todo";
 import { useFormStatus } from "react-dom";
 import { deleteTodoById, updateTodo } from "@/actions/todo";
 
-function SubmitSaveButton() {
+function SubmitButton({ children }: { children: React.ReactNode }) {
   const { pending } = useFormStatus();
   return (
     <Button
@@ -20,7 +19,7 @@ function SubmitSaveButton() {
       variant="light"
       type="submit"
     >
-      <Save />
+      {children}
     </Button>
   );
 }
@@ -32,7 +31,6 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted);
   const editInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -97,7 +95,9 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
               }
             ></Input>
             {/* button的onClick事件会导致表单无法触发action，因此将onclick触发的动作放置到表单的onSubmit方法上 */}
-            <SubmitSaveButton></SubmitSaveButton>
+            <SubmitButton>
+              <Save />
+            </SubmitButton>
             <Button
               isIconOnly
               size="sm"
@@ -160,12 +160,8 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
             >
               <Pencil></Pencil>
             </Button>
-            <Button
-              isLoading={isDeleting}
-              isIconOnly
-              variant="light"
-              onClick={async () => {
-                setIsDeleting(true);
+            <form
+              action={async () => {
                 try {
                   const data = await deleteTodoById(todo.id);
                   if (data === "success") {
@@ -174,7 +170,6 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
                       description: `${todo.todo} is deleted!.`,
                       duration: 2000,
                     });
-                    router.refresh();
                   }
                 } catch (error) {
                   if (error instanceof Error) {
@@ -189,8 +184,10 @@ export default function TodoItem({ todoItem }: { todoItem: TodoItem }) {
                 }
               }}
             >
-              <XSquare></XSquare>
-            </Button>
+              <SubmitButton>
+                <XSquare></XSquare>
+              </SubmitButton>
+            </form>
           </>
         )}
       </div>
