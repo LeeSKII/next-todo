@@ -49,11 +49,23 @@ export default async function Page() {
           </div>
         </form>
       </div>
-      <div className="md:w-1/2 mx-auto border rounded-md p-3 divide-y-1">
+      <div className="md:w-1/2 mx-auto border rounded-md p-3 divide-y-1 flex flex-col gap-1">
         {users.map((user) => {
           return (
-            <div key={user.id} className="font-bold">
-              {user.name}
+            <div key={user.id} className="font-bold h-12 flex items-center">
+              <form
+                className="flex items-center w-full justify-between"
+                action={async () => {
+                  "use server";
+                  await UserModel.findByIdAndDelete(user.id);
+                  revalidatePath("/nextui/user", "page");
+                }}
+              >
+                <div>{user.name}</div>
+                <div>
+                  <SubmitButton text="Delete" />
+                </div>
+              </form>
             </div>
           );
         })}

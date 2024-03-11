@@ -17,7 +17,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 import NavbarItemS from "@/components/uinext/NavbarItemS";
 
-export default function Nav({ userInfo }: { userInfo: React.ReactNode }) {
+export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
     { title: "Raw Todo", href: "/" },

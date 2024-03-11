@@ -18,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Nav userInfo={<UserInfo />}></Nav>
+      {/* <Nav userInfo={<UserInfo />}></Nav> */}
+      <Nav></Nav>
       {children}
     </>
   );
