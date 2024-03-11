@@ -43,11 +43,11 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItemS>
+        {/* <NavbarItemS>
           <Link color="foreground" href="/">
             Raw Todo
           </Link>
-        </NavbarItemS>
+        </NavbarItemS> */}
         <NavbarItemS href="/nextui">
           <Link href="/nextui" aria-current="page">
             Home
