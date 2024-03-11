@@ -18,6 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      {/* Because UserInfo component use cookies,any components use it will make parent components become dynamic render,if this UserInfo
+      component imported in layout file,this behavior will cause all nested page become dynamic rendero */}
       {/* <Nav userInfo={<UserInfo />}></Nav> */}
       <Nav></Nav>
       {children}

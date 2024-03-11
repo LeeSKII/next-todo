@@ -15,10 +15,7 @@ export default function NavbarItemS({
 }) {
   const pathname = usePathname();
   return (
-    <NavbarItem
-      className={className}
-      isActive={href ? pathname.startsWith(href) : false}
-    >
+    <NavbarItem className={className} isActive={pathname === href}>
       {children}
     </NavbarItem>
   );

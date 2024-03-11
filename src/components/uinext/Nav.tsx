@@ -21,7 +21,8 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
     { title: "Raw Todo", href: "/" },
-    { title: "Next Todo", href: "/nextui" },
+    { title: "Home", href: "/nextui" },
+    { title: "Next Todo", href: "/nextui/todo" },
     { title: "Tailwind SandBox", href: "/nextui/tailwind" },
     { title: "User", href: "/nextui/user" },
   ];
@@ -49,6 +50,11 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
         </NavbarItemS>
         <NavbarItemS href="/nextui">
           <Link href="/nextui" aria-current="page">
+            Home
+          </Link>
+        </NavbarItemS>
+        <NavbarItemS href="/nextui/todo">
+          <Link href="/nextui/todo" aria-current="page">
             Todo
           </Link>
         </NavbarItemS>
