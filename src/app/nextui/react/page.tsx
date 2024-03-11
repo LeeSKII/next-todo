@@ -28,6 +28,14 @@ export default function Page() {
     formRef.current?.reset();
     await sendMessage(formData);
   }
+
+  /**
+   * optimisticMessages的初始状态是message
+   * addOptimisticMessage是一个状态更新函数，参数1是当前的状态，参数2是addOptimisticMessage的参数
+   * optimisticMessages在表单执行action动作的时候即表单状态为pending的时候等于addOptimisticMessage函数的返回值，否则等于messages的值
+   * 因此使用optimisticMessages进行渲染结果即可
+   */
+
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
     (state, newMessage: string) => [
