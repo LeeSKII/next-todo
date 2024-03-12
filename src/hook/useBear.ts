@@ -4,17 +4,21 @@ import { persist } from "zustand/middleware";
 
 type BearType = {
   bears: number;
+  switch: boolean;
   increasePopulation: () => void;
   removeAllBears: () => void;
+  changeSwitch: () => void;
 };
 
 export const useBearStore = create<BearType>()(
   persist(
     (set, get) => ({
       bears: 0,
+      switch: false,
       // zustand的推荐写法，提供了更好的类型推断能力
       increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
       removeAllBears: () => set({ bears: 0 }),
+      changeSwitch: () => set((state) => ({ switch: !state.switch })),
     }),
     { name: "bears" }
   )

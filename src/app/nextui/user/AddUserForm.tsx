@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Input } from "@nextui-org/react";
+import { Input, Switch } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 
 import { addUser } from "@/actions/user";
@@ -20,7 +20,9 @@ export default function AddUserForm() {
   }, [message]);
 
   const bear = useBearStore((state) => state.bears);
+  const switchKey = useBearStore((state) => state.switch);
   const increasePopulation = useBearStore((state) => state.increasePopulation);
+  const changeSwitch = useBearStore((state) => state.changeSwitch);
 
   return (
     <>
@@ -32,6 +34,11 @@ export default function AddUserForm() {
         >
           Add
         </button>
+        <Switch
+          isSelected={switchKey}
+          onChange={changeSwitch}
+          aria-label="Automatic updates"
+        />
       </div>
       <form ref={formRef} action={addUserAction} className="space-y-3">
         <Input
