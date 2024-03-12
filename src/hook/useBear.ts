@@ -14,6 +14,7 @@ type BearType = {
   removeAllBears: () => void;
   changeSwitch: () => void;
   setUser: (user: UserInfo) => void;
+  clearUser: () => void;
 };
 
 export const useBearStore = create<BearType>()(
@@ -27,6 +28,7 @@ export const useBearStore = create<BearType>()(
       removeAllBears: () => set({ bears: 0 }),
       changeSwitch: () => set((state) => ({ switch: !state.switch })),
       setUser: (user: UserInfo) => set((state) => ({ ...state, user })),
+      clearUser: () => set((state) => ({ ...state, user: { name: "" } })),
     }),
     { name: "bears" }
   )

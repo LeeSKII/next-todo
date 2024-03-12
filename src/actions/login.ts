@@ -44,6 +44,10 @@ export async function login({
 }
 
 export async function logout() {
-  cookies().delete("name");
-  redirect("/login");
+  try {
+    cookies().delete("name");
+    return { status: "success", message: "logout success" };
+  } catch (error) {
+    return { status: "failed", message: "logout failed" };
+  }
 }
