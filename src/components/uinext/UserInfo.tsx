@@ -1,28 +1,26 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
 import React from "react";
 import { Avatar, Button, Link, Tooltip } from "@nextui-org/react";
 
 import NavbarItemS from "@/components/uinext/NavbarItemS";
 import LogoutButton from "@/components/LogoutButton";
-
-async function logout() {
-  "use server";
-  cookies().delete("name");
-  redirect("/login");
-}
+import { logout } from "@/actions/login";
+import { useBearStore } from "@/hook/useBear";
 
 export default function UserInfo() {
   // isLogin
-  const cookieStore = cookies();
-  const user = cookieStore.get("name")?.value;
-  const isLogin = user !== undefined;
+  const user = useBearStore((state) => state.user);
   return (
     <>
-      {isLogin ? (
+      {user ? (
         <>
           <NavbarItemS className="sm:flex">
-            <Avatar color="primary" isBordered size={"sm"} name={user}></Avatar>
+            <Avatar
+              color="primary"
+              isBordered
+              size={"sm"}
+              name={user.name}
+            ></Avatar>
           </NavbarItemS>
           <NavbarItemS className="sm:flex">
             <Tooltip content="Log out">

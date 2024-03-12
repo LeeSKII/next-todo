@@ -2,12 +2,18 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 //persist是zustand提供的中间件用来将状态持久化存储
 
+type UserInfo = {
+  name: string;
+};
+
 type BearType = {
   bears: number;
   switch: boolean;
+  user: UserInfo;
   increasePopulation: () => void;
   removeAllBears: () => void;
   changeSwitch: () => void;
+  setUser: (user: UserInfo) => void;
 };
 
 export const useBearStore = create<BearType>()(
@@ -15,10 +21,12 @@ export const useBearStore = create<BearType>()(
     (set, get) => ({
       bears: 0,
       switch: false,
+      user: {} as UserInfo,
       // zustand的推荐写法，提供了更好的类型推断能力
       increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
       removeAllBears: () => set({ bears: 0 }),
       changeSwitch: () => set((state) => ({ switch: !state.switch })),
+      setUser: (user: UserInfo) => set((state) => ({ ...state, user })),
     }),
     { name: "bears" }
   )
