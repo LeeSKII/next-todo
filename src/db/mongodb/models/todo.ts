@@ -8,4 +8,5 @@ let TodoSchema = new mongoose.Schema({
   updatedAt: String,
 });
 
-export default mongoose.models.Todo || mongoose.model("Todo", TodoSchema);
+export const TodoModel =
+  mongoose.models.Todo || mongoose.model("Todo", TodoSchema);

@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import UserModel from "@/db/mongodb/models/user";
 import { TodoItem } from "@/types/todo";
 
-import TodoModel from "@/db/mongodb/models/todo";
+import { TodoModel } from "@/db/mongodb/models/todo";
 import type { User } from "@/types/user";
 import connect from "@/db/mongodb/connect";
 

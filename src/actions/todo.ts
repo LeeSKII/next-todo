@@ -1,11 +1,10 @@
 "use server";
 import type { TodoItem } from "@/types/todo";
 import { revalidatePath } from "next/cache";
-import TodoModel from "@/db/mongodb/models/todo";
+import { TodoModel } from "@/db/mongodb/models/todo";
 import connect from "@/db/mongodb/connect";
 import dayjs from "dayjs";
 import { deleteToDo, updateToDo } from "@/lib/todo";
-import todo from "@/db/mongodb/models/todo";
 
 /**
  * 增加待办事项
