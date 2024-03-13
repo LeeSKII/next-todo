@@ -15,3 +15,12 @@ export async function getAllUsers(): Promise<User[]> {
   });
   return userMap;
 }
+
+export async function getUserById(userId: string): Promise<User | null> {
+  await connect();
+  const user = await UserModel.findById(userId).exec();
+  if (user._id) {
+    return user;
+  }
+  return null;
+}

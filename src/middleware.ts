@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  let userCookie = request.cookies.get("name");
-  if (!userCookie) {
-    return NextResponse.redirect(new URL("/login", request.url));
+// middleware is only supports the Edge runtime ,so you can't use mongoose inside ,because mongoose is node.js api.
+export async function middleware(request: NextRequest) {
+  let userId = request.cookies.get("userId")?.value;
+  if (userId) {
+    return NextResponse.next();
   }
-
-  return NextResponse.next();
+  return NextResponse.redirect(new URL("/login", request.url));
 }
 
 // See "Matching Paths" below to learn more

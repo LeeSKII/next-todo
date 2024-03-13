@@ -5,6 +5,7 @@ import { Input, Button, Link } from "@nextui-org/react";
 import { login } from "@/actions/login";
 import { useBearStore } from "@/hook/useBear";
 import { useRouter } from "next/navigation";
+import { hashedPassword } from "@/utils/tools";
 
 export default function LoginForm() {
   const [account, setAccount] = useState("");
@@ -22,7 +23,8 @@ export default function LoginForm() {
           e.preventDefault();
           setIsLogining(true);
           try {
-            const res = await login({ account, password });
+            const hashedPwd = await hashedPassword(password);
+            const res = await login({ account, password: hashedPwd });
             if (res && res.status === "success") {
               setUser({ name: res.data.name });
               router.push("/nextui/");

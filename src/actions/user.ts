@@ -1,8 +1,10 @@
 "use server";
-import UserModel from "@/db/mongodb/models/user";
-import connect from "@/db/mongodb/connect";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
+import { hashedPassword } from "@/utils/tools";
+
+import UserModel from "@/db/mongodb/models/user";
+import connect from "@/db/mongodb/connect";
 
 export async function addUser(preState: any, formData: FormData) {
   const user = formData.get("account")?.toString();
@@ -10,11 +12,11 @@ export async function addUser(preState: any, formData: FormData) {
   if (!user || !password) return;
   try {
     await connect();
-
+    const hashedPwd = await hashedPassword(password);
     // 创建用户
     await UserModel.create({
       name: user,
-      password,
+      password: hashedPwd,
       createAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     });
     revalidatePath("/nextui/user", "page");
