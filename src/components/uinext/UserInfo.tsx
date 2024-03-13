@@ -16,7 +16,7 @@ export default function UserInfo() {
   const router = useRouter();
   return (
     <>
-      {user ? (
+      {user.name ? (
         <>
           <NavbarItemS className="sm:flex">
             <Avatar

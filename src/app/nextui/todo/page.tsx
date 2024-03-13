@@ -13,13 +13,13 @@ import LogoutButton from "@/components/LogoutButton";
 export default async function Page() {
   // isLogin
   const cookieStore = cookies();
-  const user = cookieStore.get("name")?.value;
-  const isLogin = user !== undefined;
+  const userId = cookieStore.get("userId")?.value;
+  const userName = cookieStore.get("name")?.value;
   // wait db
   await connect();
   let todoArr: TodoItem[] = [];
 
-  if (user) todoArr = await getAllToDos({ belong: user });
+  if (userId) todoArr = await getAllToDos({ userId });
 
   async function logout() {
     "use server";
@@ -35,7 +35,12 @@ export default async function Page() {
           <ThemeSwitcher />
         </div>
         <div className="flex justify-between my-6 px-9">
-          <Avatar color="primary" isBordered size={"sm"} name={user}></Avatar>
+          <Avatar
+            color="primary"
+            isBordered
+            size={"sm"}
+            name={userName}
+          ></Avatar>
           <Tooltip content="Log out">
             <form action={logout}>
               <LogoutButton></LogoutButton>
@@ -43,7 +48,7 @@ export default async function Page() {
           </Tooltip>
         </div>
         <div className="sticky top-16 shadow-md p-3 rounded-lg z-10">
-          {user && <TodoForm user={user}></TodoForm>}
+          {userId && <TodoForm userId={userId}></TodoForm>}
         </div>
         <div className="w-full">
           <TodoList todoArr={todoArr}></TodoList>

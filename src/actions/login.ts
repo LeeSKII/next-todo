@@ -1,6 +1,7 @@
 "use server";
 
 import { verifyUser } from "@/lib/todo";
+import { Cookie } from "lucide-react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -18,6 +19,11 @@ export async function login({
       if (user) {
         // 登录成功，设置cookie
         cookies().set("name", user.name, {
+          secure: false,
+          maxAge: 60 * 60 * 24 * 7, // One week
+          path: "/",
+        });
+        cookies().set("userId", user.id, {
           secure: false,
           maxAge: 60 * 60 * 24 * 7, // One week
           path: "/",
@@ -45,7 +51,11 @@ export async function login({
 
 export async function logout() {
   try {
-    cookies().delete("name");
+    cookies()
+      .getAll()
+      .forEach((cookie) => {
+        cookies().delete(cookie.name);
+      });
     return { status: "success", message: "logout success" };
   } catch (error) {
     return { status: "failed", message: "logout failed" };

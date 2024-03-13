@@ -23,7 +23,7 @@ function SubmitButton() {
   );
 }
 
-export default function TodoForm({ user }: { user: string }) {
+export default function TodoForm({ userId }: { userId: string }) {
   const [todo, setTodo] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -55,7 +55,7 @@ export default function TodoForm({ user }: { user: string }) {
     <form
       className="flex items-center justify-between gap-3 px-3"
       action={async (formData: FormData) => {
-        const todoItem = await addTodo(user, null, formData);
+        const todoItem = await addTodo(userId, null, formData);
         if (todoItem) {
           toast({
             title: "New ToDo is arriving!",

@@ -1,33 +1,36 @@
 "use server";
-import type { TodoItem } from "@/types/todo";
+import mongoose from "mongoose";
+import dayjs from "dayjs";
 import { revalidatePath } from "next/cache";
+
+import type { TodoItem } from "@/types/todo";
 import { TodoModel } from "@/db/mongodb/models/todo";
 import connect from "@/db/mongodb/connect";
-import dayjs from "dayjs";
 import { deleteToDo, updateToDo } from "@/lib/todo";
 
 /**
  * 增加待办事项
- * @param belong 所属人
+ * @param userId 所属人id
  * @param prevState 表单提交前的状态
  * @param formData 当前提交的表单
  * @returns 返回的表单
  */
 export async function addTodo(
-  belong: string,
+  userId: string,
   prevState: TodoItem | null,
   formData: FormData
 ): Promise<TodoItem | null> {
   try {
+    await connect();
     const todo = formData.get("todo")?.toString();
+    const userObjId = new mongoose.Types.ObjectId(userId);
     const newTodo = new TodoModel({
       todo,
       isCompleted: false,
-      belong,
+      userId: userObjId,
       createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
       updatedAt: "",
     });
-    await connect();
     const savedTodo = await newTodo.save();
     // 刷新服务端的数据缓存，form提交后会刷新页面
     revalidatePath("/nextui", "page");

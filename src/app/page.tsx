@@ -17,20 +17,21 @@ export const dynamic = "force-dynamic";
 export default async function Page() {
   // isLogin
   const cookieStore = cookies();
-  const user = cookieStore.get("name")?.value;
-  const isLogin = user !== undefined;
+  const user = cookieStore.get("user")?.value;
+  const userId = cookieStore.get("userId")?.value;
+  const isLogin = userId !== undefined;
 
   // wait db
   await connect();
   let todoArr: TodoItem[] = [];
-  if (user) todoArr = await getAllToDos({ belong: user });
+  if (userId) todoArr = await getAllToDos({ userId });
 
   async function addTodo(formData: FormData) {
     "use server";
     const todo = formData.get("todo")?.toString();
-    if (todo && user) {
+    if (todo && userId) {
       try {
-        const todoItem = await saveToDo({ todo, belong: user });
+        const todoItem = await saveToDo({ todo, userId });
       } catch (error) {
         if (error instanceof Error) {
           redirect(`/?error=${error.message}`);
