@@ -28,6 +28,11 @@ export async function login({
           maxAge: 60 * 60 * 24 * 7, // One week
           path: "/",
         });
+        const key = process.env.PRIVATE_KEY;
+        const iv = process.env.PRIVATE_IV;
+        if (key && iv) {
+        }
+
         return {
           status: "success",
           data: { ...user },

@@ -37,18 +37,22 @@ export async function getAllToDos({
 }: {
   userId: string;
 }): Promise<TodoItem[]> {
-  const todoData = await TodoModel.find({ userId }).sort({ createdAt: -1 });
-  const todoArr: TodoItem[] = [];
-  todoData.map((todo) => {
-    todoArr.push({
-      todo: todo.todo,
-      isCompleted: todo.isCompleted,
-      createdAt: todo.createdAt,
-      updatedAt: todo.updatedAt,
-      id: todo._id.toString(),
+  try {
+    const todoData = await TodoModel.find({ userId }).sort({ createdAt: -1 });
+    const todoArr: TodoItem[] = [];
+    todoData.map((todo) => {
+      todoArr.push({
+        todo: todo.todo,
+        isCompleted: todo.isCompleted,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+        id: todo._id.toString(),
+      });
     });
-  });
-  return todoArr;
+    return todoArr;
+  } catch (error) {
+    return [] as TodoItem[];
+  }
 }
 
 export async function updateToDo(
