@@ -29,7 +29,11 @@ export default async function Page() {
 
   async function logout() {
     "use server";
-    cookies().delete("name");
+    cookies()
+      .getAll()
+      .forEach((cookie) => {
+        cookies().delete(cookie.name);
+      });
     redirect("/login");
   }
 
