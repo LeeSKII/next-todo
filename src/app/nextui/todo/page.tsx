@@ -9,12 +9,18 @@ import { getAllToDos } from "@/lib/todo";
 import TodoList from "@/components/todo/TodoList";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
+import { USER_TOKEN } from "@/lib/constants";
+import { decryptUserToken } from "@/lib/auth";
+import type { JWTPayload } from "jose";
+
+type JWTPayloadWithUserId = JWTPayload & { userId: string; userName: string };
 
 export default async function Page() {
-  // isLogin
+  // decrypt user info from token
   const cookieStore = cookies();
-  const userId = cookieStore.get("userId")?.value;
-  const userName = cookieStore.get("name")?.value;
+  const token = cookieStore.get(USER_TOKEN)?.value!;
+  const userPayload = decryptUserToken(token);
+  const { userId, userName } = userPayload as JWTPayloadWithUserId;
   // wait db
   await connect();
   let todoArr: TodoItem[] = [];

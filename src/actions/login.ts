@@ -1,9 +1,9 @@
 "use server";
 
 import { verifyUser } from "@/lib/todo";
-import { Cookie } from "lucide-react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { setUserCookie } from "@/lib/auth";
 
 export async function login({
   account,
@@ -18,21 +18,17 @@ export async function login({
       const user = await verifyUser({ account, password });
       if (user) {
         // 登录成功，设置cookie
-        cookies().set("name", user.name, {
-          secure: false,
-          maxAge: 60 * 60 * 24 * 7, // One week
-          path: "/",
-        });
-        cookies().set("userId", user.id, {
-          secure: false,
-          maxAge: 60 * 60 * 24 * 7, // One week
-          path: "/",
-        });
-        const key = process.env.PRIVATE_KEY;
-        const iv = process.env.PRIVATE_IV;
-        if (key && iv) {
-        }
-
+        // cookies().set("name", user.name, {
+        //   secure: false,
+        //   maxAge: 60 * 60 * 24 * 7, // One week
+        //   path: "/",
+        // });
+        // cookies().set("userId", user.id, {
+        //   secure: false,
+        //   maxAge: 60 * 60 * 24 * 7, // One week
+        //   path: "/",
+        // });
+        await setUserCookie({ userId: user.id, userName: user.name });
         return {
           status: "success",
           data: { ...user },

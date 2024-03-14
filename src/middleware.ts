@@ -1,14 +1,21 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { verifyAuth } from "@/lib/auth";
 
 // This function can be marked `async` if using `await` inside
 // middleware is only supports the Edge runtime ,so you can't use mongoose inside ,because mongoose is node.js api.
 export async function middleware(request: NextRequest) {
-  let user = request.cookies.get("userId")?.value;
-  if (user) {
+  // validate the user is authenticated
+  const verifiedToken = await verifyAuth(request).catch((err: Error) => {
+    console.error("verifyAuth Error", err.message);
+  });
+  if (!verifiedToken) {
+    // if this an API request, respond with JSON
+    return NextResponse.redirect(new URL("/login", request.url));
+    // otherwise, redirect to the set token page
+  } else {
     return NextResponse.next();
   }
-  return NextResponse.redirect(new URL("/login", request.url));
 }
 
 // See "Matching Paths" below to learn more

@@ -38,11 +38,11 @@ export default function UserInfo() {
                       clearUser();
                       router.push("/login");
                     } else {
-                      console.log("error");
+                      console.log("Log out error", res.status, res.message);
                     }
                   } catch (error) {
                     if (error instanceof Error) {
-                      console.log(error.message);
+                      console.log("Log out", error.message);
                     }
                   }
                 }}
