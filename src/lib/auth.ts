@@ -2,12 +2,15 @@ import type { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { nanoid } from "nanoid";
 import { SignJWT, jwtVerify, decodeJwt } from "jose";
+import type { JWTPayload } from "jose";
 import { USER_TOKEN, getJwtSecretKey } from "./constants";
 
 interface UserJwtPayload {
   jti: string;
   iat: number;
 }
+
+type JWTPayloadWithUserId = JWTPayload & { userId: string; userName: string };
 
 export class AuthError extends Error {}
 
@@ -48,7 +51,7 @@ export async function setUserCookie(payload: any = {}) {
   });
 }
 
-export function decryptUserToken(token: string) {
+export function decryptUserToken(token: string): JWTPayloadWithUserId {
   return decodeJwt(token);
 }
 
