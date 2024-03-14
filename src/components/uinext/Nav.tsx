@@ -98,9 +98,11 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
               description="Other things."
               startContent={<Smile />}
               href="/nextui/react"
+              as={Link}
             >
               useOptimistic
             </DropdownItem>
+
             <DropdownItem
               key="usage_metrics"
               description="Wait to do."
