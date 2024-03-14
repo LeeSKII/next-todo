@@ -3,6 +3,7 @@
 import { useOptimistic, useState, useRef } from "react";
 import { send } from "@/actions/mock";
 import { Button, Input } from "@nextui-org/react";
+import { useSimpleBearStore } from "@/hook/useSimpleBear";
 
 type Message = {
   text: string;
@@ -47,8 +48,11 @@ export default function Page() {
     ]
   );
 
+  const simpleBear = useSimpleBearStore((state) => state.bears);
+
   return (
     <div className="container mx-auto md:w-1/2 space-y-3">
+      <div>simpleBear:{simpleBear}</div>
       {optimisticMessages.map((message, index) => (
         <div key={index}>
           {message.text}

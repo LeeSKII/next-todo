@@ -14,7 +14,7 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 import Link from "next/link";
-import { Drama, ChevronDown, Smile, Ship } from "lucide-react";
+import { Drama, ChevronDown, Smile, Ship, PawPrint } from "lucide-react";
 import React from "react";
 
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
@@ -94,7 +94,7 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
             }}
           >
             <DropdownItem
-              key="autoscaling"
+              key="useOptimistic"
               description="Other things."
               startContent={<Smile />}
               href="/nextui/react"
@@ -104,11 +104,13 @@ export default function Nav({ userInfo }: { userInfo?: React.ReactNode }) {
             </DropdownItem>
 
             <DropdownItem
-              key="usage_metrics"
-              description="Wait to do."
-              startContent={<Ship className="text-green-800" />}
+              key="zusTand"
+              description="ZusTand."
+              startContent={<PawPrint className="text-green-800" />}
+              href="/nextui/zustand"
+              as={Link}
             >
-              Wait to do
+              ZusTand
             </DropdownItem>
 
             <DropdownItem

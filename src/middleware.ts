@@ -10,9 +10,7 @@ export async function middleware(request: NextRequest) {
     console.error("verifyAuth Error", err.message);
   });
   if (!verifiedToken) {
-    // if this an API request, respond with JSON
     return NextResponse.redirect(new URL("/login", request.url));
-    // otherwise, redirect to the set token page
   } else {
     return NextResponse.next();
   }
