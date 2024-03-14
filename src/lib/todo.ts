@@ -7,6 +7,7 @@ import { TodoItem } from "@/types/todo";
 import { TodoModel } from "@/db/mongodb/models/todo";
 import type { User } from "@/types/user";
 import connect from "@/db/mongodb/connect";
+import { hashedPassword } from "@/utils/tools";
 
 export async function saveToDo({
   todo,
@@ -100,9 +101,10 @@ export async function registerUser({
 }): Promise<User> {
   try {
     await connect();
+    const hashedPwd = await hashedPassword(password);
     const userData = await UserModel.create({
       name: account,
-      password,
+      password:hashedPwd,
       createdAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
     });
 
