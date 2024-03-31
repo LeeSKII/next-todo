@@ -18,14 +18,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - login、register (login page)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!login|register|_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ["/nextui/:path*", "/todo/:path*"],
 };

@@ -35,7 +35,7 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <div>
+    <>
       <Switch
         isSelected={isSelected}
         onValueChange={(val) => {
@@ -52,6 +52,6 @@ export function ThemeSwitcher() {
           )
         }
       ></Switch>
-    </div>
+    </>
   );
 }
