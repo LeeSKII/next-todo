@@ -47,7 +47,7 @@ export async function setUserCookie(payload: any = {}) {
   cookies().set(USER_TOKEN, token, {
     httpOnly: true,
     secure: false,
-    maxAge: 60 * 60 * 2, // 2 hours in seconds
+    maxAge: 60 * 60 * 24 * 30, // 30days
   });
 }
 
