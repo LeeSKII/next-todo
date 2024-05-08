@@ -3,19 +3,18 @@ import React from "react";
 import CountDown from "./CountDown";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { animals } from "./data";
 import {
   Accordion,
   AccordionItem,
   Avatar,
   Input,
   Button,
-  Listbox,
-  ListboxSection,
-  ListboxItem,
+  Autocomplete,
+  AutocompleteItem,
   Checkbox,
-  Select,
-  SelectItem,
 } from "@nextui-org/react";
+import { Pencil, Plus, X } from "lucide-react";
 
 type DurationType = {
   years: number;
@@ -48,116 +47,18 @@ export default function Page() {
   return (
     <div className="container mx-auto p-3">
       <div className="full md:flex md:justify-between md:items-center">
-        <Select className="max-w-lg" label="Select project">
-          <SelectItem
-            key="argentina"
-            startContent={
-              <Avatar
-                alt="Argentina"
-                className="w-6 h-6"
-                src="https://flagcdn.com/ar.svg"
-              />
-            }
-          >
-            Argentina
-          </SelectItem>
-          <SelectItem
-            key="venezuela"
-            startContent={
-              <Avatar
-                alt="Venezuela"
-                className="w-6 h-6"
-                src="https://flagcdn.com/ve.svg"
-              />
-            }
-          >
-            Venezuela
-          </SelectItem>
-          <SelectItem
-            key="brazil"
-            startContent={
-              <Avatar
-                alt="Brazil"
-                className="w-6 h-6"
-                src="https://flagcdn.com/br.svg"
-              />
-            }
-          >
-            Brazil
-          </SelectItem>
-          <SelectItem
-            key="switzerland"
-            startContent={
-              <Avatar
-                alt="Switzerland"
-                className="w-6 h-6"
-                src="https://flagcdn.com/ch.svg"
-              />
-            }
-          >
-            Switzerland
-          </SelectItem>
-          <SelectItem
-            key="germany"
-            startContent={
-              <Avatar
-                alt="Germany"
-                className="w-6 h-6"
-                src="https://flagcdn.com/de.svg"
-              />
-            }
-          >
-            Germany
-          </SelectItem>
-          <SelectItem
-            key="spain"
-            startContent={
-              <Avatar
-                alt="Spain"
-                className="w-6 h-6"
-                src="https://flagcdn.com/es.svg"
-              />
-            }
-          >
-            Spain
-          </SelectItem>
-          <SelectItem
-            key="france"
-            startContent={
-              <Avatar
-                alt="France"
-                className="w-6 h-6"
-                src="https://flagcdn.com/fr.svg"
-              />
-            }
-          >
-            France
-          </SelectItem>
-          <SelectItem
-            key="italy"
-            startContent={
-              <Avatar
-                alt="Italy"
-                className="w-6 h-6"
-                src="https://flagcdn.com/it.svg"
-              />
-            }
-          >
-            Italy
-          </SelectItem>
-          <SelectItem
-            key="mexico"
-            startContent={
-              <Avatar
-                alt="Mexico"
-                className="w-6 h-6"
-                src="https://flagcdn.com/mx.svg"
-              />
-            }
-          >
-            Mexico
-          </SelectItem>
-        </Select>
+        <Autocomplete
+          defaultItems={animals}
+          label="Project"
+          placeholder="Select an project"
+          className="max-w-xs"
+        >
+          {(animal) => (
+            <AutocompleteItem key={animal.value}>
+              {animal.label}
+            </AutocompleteItem>
+          )}
+        </Autocomplete>
         <CountDown durationInfo={durationObj} endDateTime={endDateTime} />
       </div>
       <Accordion selectionMode="multiple" defaultExpandedKeys={["2", "3"]}>
@@ -180,14 +81,7 @@ export default function Page() {
         <AccordionItem
           key="2"
           aria-label="Janelle Lenard"
-          startContent={
-            <Avatar
-              isBordered
-              color="success"
-              radius="lg"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-          }
+          startContent={<X />}
           subtitle="3 incompleted steps"
           title="商务跟踪情况"
         >
@@ -256,11 +150,21 @@ export default function Page() {
                         跟踪进展
                       </Checkbox>
                       <div className="flex items-center gap-2">
-                        <Button isIconOnly size="sm" color={"secondary"}>
-                          e
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="light"
+                          color={"secondary"}
+                        >
+                          <Pencil size={16} />
                         </Button>
-                        <Button isIconOnly size="sm" color="default">
-                          x
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="light"
+                          color="default"
+                        >
+                          <X size={16} />
                         </Button>
                       </div>
                     </div>
@@ -269,7 +173,7 @@ export default function Page() {
                   <form action="" className="flex items-center gap-3">
                     <Input size="sm" type="email" label="待办事项" />
                     <Button isIconOnly size="md" color="primary">
-                      +
+                      <Plus />
                     </Button>
                   </form>
                 </div>
