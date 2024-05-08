@@ -1,4 +1,5 @@
 import { nextui } from "@nextui-org/react";
+import daisyui from "daisyui";
 import type { Config } from "tailwindcss";
 
 const config = {
@@ -79,7 +80,7 @@ const config = {
       // },
     },
   },
-  plugins: [require("tailwindcss-animate"), nextui(), require("daisyui")],
+  plugins: [require("tailwindcss-animate"), nextui(), daisyui],
 } satisfies Config;
 
 export default config;
