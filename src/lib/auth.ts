@@ -41,7 +41,7 @@ export async function setUserCookie(payload: any = {}) {
     .setProtectedHeader({ alg: "HS256" })
     .setJti(nanoid())
     .setIssuedAt()
-    .setExpirationTime("2h")
+    .setExpirationTime("30days")
     .sign(new TextEncoder().encode(getJwtSecretKey()));
 
   cookies().set(USER_TOKEN, token, {
