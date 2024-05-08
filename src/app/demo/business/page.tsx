@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+import CountDown from "./CountDown";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 import {
   Accordion,
   AccordionItem,
@@ -14,13 +17,37 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
+type DurationType = {
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
 export default function Page() {
   const defaultContent =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
+  const now = dayjs();
+  const endDateTime = "2024-05-15 22:03:20";
+  const endDate = dayjs(endDateTime);
+  dayjs.extend(duration);
+  const durationInfo = dayjs.duration(endDate.diff(now));
+
+  const durationObj: DurationType = {
+    years: durationInfo.years(),
+    months: durationInfo.months(),
+    days: durationInfo.days(),
+    hours: durationInfo.hours(),
+    minutes: durationInfo.minutes(),
+    seconds: durationInfo.seconds(),
+  };
+
   return (
     <div className="container mx-auto p-3">
-      <div className="full">
+      <div className="full md:flex md:justify-between md:items-center">
         <Select className="max-w-lg" label="Select project">
           <SelectItem
             key="argentina"
@@ -131,6 +158,7 @@ export default function Page() {
             Mexico
           </SelectItem>
         </Select>
+        <CountDown durationInfo={durationObj} endDateTime={endDateTime} />
       </div>
       <Accordion selectionMode="multiple" defaultExpandedKeys={["2", "3"]}>
         <AccordionItem
