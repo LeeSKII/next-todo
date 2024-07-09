@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 import UserInfo from "@/components/uinext/UserInfo";
 import Nav from "@/components/uinext/Nav";
-import SessionProvider from "./SessionProvider";
+import SessionProvider from "@/context/SessionProvider";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {

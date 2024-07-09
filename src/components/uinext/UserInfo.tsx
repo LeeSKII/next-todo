@@ -9,7 +9,7 @@ import LogoutButton from "@/components/LogoutButton";
 import { useBearStore } from "@/hook/useBear";
 import { logout } from "@/actions/login";
 import { useContext } from "react";
-import { UserContext } from "@/app/nextui/UserContext";
+import { UserContext } from "@/context/UserContext";
 
 export default function UserInfo() {
   // isLogin
