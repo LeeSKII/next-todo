@@ -22,6 +22,7 @@ export default function Page() {
           value={lower}
           onValueChange={(value) => {
             setLower(value);
+            console.log("lower", value);
             urlSearchParams.set("range", `${bigger}-${value}`);
             router.push(`${pathname}?${urlSearchParams}`);
           }}
@@ -32,6 +33,7 @@ export default function Page() {
           value={bigger}
           onValueChange={(value) => {
             setBigger(value);
+            console.log("bigger", value);
             urlSearchParams.set("range", `${value}-${lower}`);
             router.push(`${pathname}?${urlSearchParams}`);
           }}
