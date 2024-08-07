@@ -21,6 +21,7 @@ export default function App() {
     <ConfigProvider locale={locale}>
       <div className="mx-3">
         <MobileCalendar
+          className="md:hidden"
           selectionMode="single"
           onChange={(e) => {
             console.log(e);
